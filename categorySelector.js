@@ -1,7 +1,7 @@
 /*
  categorySelector 1.0.0
  Licensed under the MIT license.
- https://github.com/VaJoy
+ https://github.com/VaJoy/categorySelector
  */
 
 (function ($, window, undefined) {
