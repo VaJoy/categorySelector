@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <script src="js/jquery-1.7.2.min.js"></script>
+  <script src="sd_categorySelector.js"></script>
+  <title></title>
+</head>
+<body>
+  <div style="height: 20px; background: yellow;" data-id="21 23">益智游戏 找碴游戏</div>
+  <input type="text" data-id="2,50" value="小说类,网络工具"/>
+  <br/>
+  <a href="javascript:void(0);" id="submit">提交表单数据</a>
+
+  <script>
+    var data = [
+      {"id": "1", "name": "游戏类", "items": [
+        {"id": "21", "name": "益智游戏"},
+        {"id": "22", "name": "角色扮演"},
+        {"id": "23", "name": "找碴游戏"}
+      ]},
+      {"id": "2", "name": "小说类", "items": [
+        {"id": "31", "name": "地图雏形"},
+        {"id": "32", "name": "商务理财"},
+        {"id": "33", "name": "浪漫偶像"},
+        {"id": "34", "name": "社交人文"},
+        {"id": "35", "name": "儿童教学"},
+        {"id": "36", "name": "建筑工程"},
+        {"id": "37", "name": "科学技术"}
+      ]},
+      {"id": "3", "name": "应用类", "items": [
+        {"id": "50", "name": "网络工具"},
+        {"id": "52", "name": "系统必备"},
+        {"id": "53", "name": "辅助工具"}
+      ]},
+      {"id": "4", "name": "悬浮广告条", "items": [
+        {"id": "66", "name": "A套餐"},
+        {"id": "67", "name": "B套餐"}
+      ]}
+    ];
+
+    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 5,splitor: " "});
+    $("input").bindCategory({data: data,splitor: ",", itemNum: 3});
+
+    $("#submit").click(function () {
+      //提交表单数据
+      var sub_data = {
+        "div": $("div").attr("data-id"),
+        "input": $("input").attr("data-id")
+      };
+      $.ajax({
+        url: "a.json",
+        data: sub_data,
+        success: function (data) {
+          console.log(sub_data);
+        }
+      });
+    })
+  </script>
+</body>
+</html>
