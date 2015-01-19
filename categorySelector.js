@@ -79,6 +79,8 @@
                     addGroupTitle(option.data[i].id, option.data[i].name); //添加组标题
                     addGroupItems(option.data[i].items,option.data[i].id);  //添加组选项
                 }
+            }else{ //单级数据
+                addGroupItems(option.data);
             }
         }
 
