@@ -248,6 +248,7 @@
                     ids += (i > 0 ? option.splitor : "") + $(this).attr("data-id");
                 });
                 $initInput.attr("data-id", ids).text(names).val(names);
+                if(ids==="") setDefaultVal(option.emptyText);
                 closeAll();
                 if(typeof option.callback ==="function"){
                     option.callback(ids);
