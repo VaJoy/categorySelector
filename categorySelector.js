@@ -33,8 +33,9 @@
                     {"id": "53", "name": "辅助工具"}
                 ]}
             ],
-            theme: "#2cbaa0",
-            title: "请选择类别",
+            theme: "#2cbaa0", //主题颜色
+            title: "请选择类别",  //弹出框标题
+            emptyText:"", //如果初始值为空，可自定义初始内容
             itemNum: 3,   //最多可选择的个数
             groupTitle_enable: true,  //小组标题是否可选
             splitor: ",", //分隔符
@@ -58,6 +59,7 @@
         else {
             $initInput.data("bindCategory", "bound");
             $initInput.on("click", showCategory);
+            setDefaultVal(option.emptyText);
         }
         if ($("#cs-clearFixed").length < 1) $("head").append($clearFixed);
 
@@ -70,6 +72,16 @@
             bindData();
             addDefaultData();
             resetAll();
+        }
+
+        /**
+         * 无初始化数据时，绑定控件要显示的内容
+         * @param text - 文本内容
+         */
+        function setDefaultVal(text){
+            if($initInput.attr("data-id")==="" && text!==""){ //没有初始数据,且配置文本不为空
+                $initInput.val(text).text(text);
+            }
         }
 
         /**

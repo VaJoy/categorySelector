@@ -9,6 +9,7 @@
 <body>
   <div style="height: 20px; background: yellow;" data-id="21 23">益智游戏 找碴游戏</div>
   <input type="text" data-id="31" value="地图雏形"/>
+  <p data-id=""></p>
   <br/>
   <a href="javascript:void(0);" id="submit">提交表单数据</a>
 
@@ -52,8 +53,9 @@
       alert(id);
     }
 
-    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 15, splitor: " ",emptyEnable:true,callback:getIds});
+    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 15, splitor: " ",callback:getIds});
     $("input").bindCategory({data: data2, splitor: ",", itemNum: 1});
+    $("p").bindCategory({data: data2, splitor: ",", itemNum: 2,emptyEnable:true,emptyText:"请选择"});
 
     $("#submit").click(function () {
       //提交表单数据
