@@ -155,7 +155,7 @@
                 deleteItem($btn);
                 return false;
             }
-            if(addedNum==1){
+            if(option.itemNum==1){  //单选状态下，如果已有选项，那么新选项直接替换掉旧选项
                 var $span = $addedArea.find("span");
                 if ($span.length > 0){
                     deleteItem($span);
