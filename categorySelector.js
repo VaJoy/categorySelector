@@ -38,7 +38,8 @@
             itemNum: 3,   //最多可选择的个数
             groupTitle_enable: true,  //小组标题是否可选
             splitor: ",", //分隔符
-            callback: !1
+            callback: !1,  //回调
+            emptyEnable:!1  //是否选项为空
         }, option);
 
         $html.css("minHeight", "100%");
@@ -48,9 +49,9 @@
             doc_h = Math.max($body.height(), $html.height()),
             $clearFixed = $("<style id='cs-clearFixed'>.cs-fontInit{font:12px/1.2 \"Arial\",\"Microsoft Yahei\";}.cs-clearfixed:after{content:'\\200B';display:block;height:0;clear:both;}.cs-a-hover,.cs-btn-hover{transition:all .3s;}.cs-a-hover{color:#ccc;}.cs-a-hover:hover{color:" + option.theme + ";}.cs-btn-hover{color:#333;}.cs-btn-hover:hover{color:white;background:" + option.theme + ";}.cs-selected{color:white;background:" + option.theme + ";}</style>"),
             $bg = $("<div style='position:absolute;z-index:9999996;top:0;left:0;width:100%;height:" + doc_h + "px;background:black;opacity:0.6;'></div>"),
-            $wrap = $("<div class='cs-fontInit' style='position:absolute;z-index:9999997;left:50%;width:750px;height:500px;color:#666;background:white;'></div>"),
+            $wrap = $("<div class='cs-fontInit' style='position:absolute;padding-bottom:13px;z-index:9999997;left:50%;width:750px;color:#666;background:white;'></div>"),
             $top = $("<h3 style='padding:10px;margin:0;border-bottom:solid 1px #ccc;font-size:14px;background:#F3F3F3;'>" + option.title + "<label id='maxNum' style='font-weight:normal;'></label><div style='float: right;width:130px;text-align: right;font-size:12px;font-weight:normal;'><span>[ <a style='text-decoration:none;color:" + option.theme + ";' id='cs_save' href='javascript:void(0);'>确定</a> ]</span>&nbsp;&nbsp;<span>[ <a style='text-decoration:none;color:" + option.theme + ";' id='cs_cancle' href='javascript:void(0);'>取消</a> ]</span></div></h3>"),
-            $candidateArea = $("<div class='cs-clearfixed' style='padding:10px;border-bottom: dotted 1px #ccc;'><span style='display:block;float: left;padding-top:4px;'>已添加：</span><div id='addedArea' style='float: left;'></div></div>"),
+            $candidateArea = $("<div class='cs-clearfixed' style='padding:10px;padding-bottom:5px;border-bottom: dotted 1px #ccc;'><span style='display:block;float: left;padding-top:4px;'>已添加：</span><div id='addedArea' style='float: left;width:580px;'></div><a id='cs-clearAll' style='display:block;float:right;padding:2px 5px;border-radius:3px;color:white;text-decoration:none;background:" + option.theme + ";' href='javascript:void(0);' title='情况全部选项'>清空</a></div>"),
             $selectArea = $("<div class='cs-clearfixed' style='padding:20px 10px 0 10px;height:380px;border-bottom: dotted 1px #ccc;overflow-y:scroll;'></div>");
 
         if ($initInput.data("bindCategory")) $initInput.off("click", showCategory);  //单例模式
@@ -68,6 +69,7 @@
             bindBtn();
             bindData();
             addDefaultData();
+            resetAll();
         }
 
         /**
@@ -83,6 +85,17 @@
             }else{ //单级数据
                 addGroupItems(option.data);
             }
+        }
+
+        /**
+         * 清空
+         */
+        function resetAll(){
+            $("#cs-clearAll").click(function(){
+                $("a","#addedArea").each(function(){
+                    $(this).click();
+                })
+            })
         }
 
         /**
@@ -165,7 +178,7 @@
                 }
             }
             if (addedNum >= option.itemNum) return false;  //超过可选次数则忽略
-            var $added = $("<span data-id='" + id + "' data-name='" + name + "' style='display:block;float:left;padding:3px 8px;margin:0 5px;min-width:68px;border:solid 1px " + option.theme + ";'>" + name + " <a class='cs-a-hover' style='display:block;float:right;margin-left:5px;text-decoration:none;' title='删除该选项' href='javascript:void(0);'>X</a></span>")
+            var $added = $("<span data-id='" + id + "' data-name='" + name + "' style='display:block;float:left;padding:3px 8px;margin:0 5px 5px 5px;min-width:68px;border:solid 1px " + option.theme + ";'>" + name + " <a class='cs-a-hover' style='display:block;float:right;margin-left:5px;text-decoration:none;' title='删除该选项' href='javascript:void(0);'>X</a></span>")
                 .appendTo("#addedArea");
             toggleBg(id);
             if(groupid) $added.attr("data-group",groupid);
@@ -173,6 +186,7 @@
                 deleteItem(id);
             });
             ++addedNum;
+            $("#sc-errorInfo").hide();
         }
 
         /**
@@ -198,9 +212,9 @@
             sroll_t = $win.scrollTop();
             sroll_l = $win.scrollLeft();
             $bg.appendTo($body).hide().fadeIn(200);
-            $wrap.append($top).append($candidateArea).append($selectArea).appendTo($body).css({"top": win_h / 2 + sroll_t, "marginTop": "-250px", "marginLeft": "-375px"});
+            $wrap.append($top).append($candidateArea).append($selectArea).appendTo($body).css({"top": win_h / 2 + sroll_t, "marginTop": "-247px", "marginLeft": "-375px"});
             var info = option.itemNum > 1 ? "最多可选" : "只能选择";
-            $("#maxNum").html("（" + info + " <strong style='color:" + option.theme + ";'>" + option.itemNum + "</strong> 项）");
+            $("#maxNum").html("（" + info + " <strong style='color:" + option.theme + ";'>" + option.itemNum + "</strong> 项<lable id='sc-errorInfo' style='display: none;'>，<strong style='color:" + option.theme + ";'>请至少先选择一项</strong></lable>）");
         }
 
         /**
@@ -213,8 +227,8 @@
             $("#cs_save").click(function () {
                 var $itemSpans = $("#addedArea").children("span"),
                     names = "", ids = "";
-                if ($itemSpans.length < 1) {
-                    alert("请先选择至少一个选项");
+                if (!option.emptyEnable && $itemSpans.length < 1) {
+                    $("#sc-errorInfo").show(200);
                     return false;
                 }
                 $itemSpans.each(function (i) {
