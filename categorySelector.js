@@ -39,7 +39,7 @@
             groupTitle_enable: true,  //小组标题是否可选
             splitor: ",", //分隔符
             callback: !1,  //回调
-            emptyEnable:!1  //是否选项为空
+            emptyEnable:!1  //是否选项可为空
         }, option);
 
         $html.css("minHeight", "100%");
