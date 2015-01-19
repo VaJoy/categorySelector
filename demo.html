@@ -8,7 +8,7 @@
 </head>
 <body>
   <div style="height: 20px; background: yellow;" data-id="21 23">益智游戏 找碴游戏</div>
-  <input type="text" data-id="2,50" value="小说类,网络工具"/>
+  <input type="text" data-id="2" value="小说类"/>
   <br/>
   <a href="javascript:void(0);" id="submit">提交表单数据</a>
 
@@ -40,7 +40,7 @@
     ];
 
     $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 5,splitor: " "});
-    $("input").bindCategory({data: data,splitor: ",", itemNum: 3});
+    $("input").bindCategory({data: data,splitor: ",", itemNum: 1});
 
     $("#submit").click(function () {
       //提交表单数据

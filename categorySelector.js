@@ -149,10 +149,17 @@
          * @param groupid - 组标题项键值（可选）
          */
         function AddItem(id, name, groupid) {
-            var $btn = $("#addedArea").find("span[data-id="+id+"]");
-            if ($btn.length >= 1){ //选择的选项已在选中队列则删除
+            var $addedArea = $("#addedArea"),
+                $btn = $addedArea.find("span[data-id="+id+"]");
+            if ($btn.length > 0){ //选择的选项已在选中队列则删除
                 deleteItem($btn);
                 return false;
+            }
+            if(addedNum==1){
+                var $span = $addedArea.find("span");
+                if ($span.length > 0){
+                    deleteItem($span);
+                }
             }
             if (addedNum >= option.itemNum) return false;  //超过可选次数则忽略
             var $added = $("<span data-id='" + id + "' data-name='" + name + "' style='display:block;float:left;padding:3px 8px;margin:0 5px;min-width:68px;border:solid 1px " + option.theme + ";'>" + name + " <a class='cs-a-hover' style='display:block;float:right;margin-left:5px;text-decoration:none;' title='删除该选项' href='javascript:void(0);'>X</a></span>")
