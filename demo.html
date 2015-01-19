@@ -52,7 +52,7 @@
       alert(id);
     }
 
-    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 15, splitor: " ",emptyEnable:true});
+    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 15, splitor: " ",emptyEnable:true,callback:getIds});
     $("input").bindCategory({data: data2, splitor: ",", itemNum: 1});
 
     $("#submit").click(function () {
