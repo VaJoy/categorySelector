@@ -37,7 +37,8 @@
             title: "请选择类别",
             itemNum: 3,   //最多可选择的个数
             groupTitle_enable: true,  //小组标题是否可选
-            splitor: "," //分隔符
+            splitor: ",", //分隔符
+            callback: !1
         }, option);
 
         $html.css("minHeight", "100%");
@@ -222,6 +223,9 @@
                 });
                 $initInput.attr("data-id", ids).text(names).val(names);
                 closeAll();
+                if(typeof option.callback ==="function"){
+                    option.callback(ids);
+                }
             })
         }
 

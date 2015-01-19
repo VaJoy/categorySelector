@@ -38,7 +38,7 @@
             {"id": "67", "name": "B套餐"}
           ]}
         ],
-        data2 = [
+        data2 = [  //单级数据
           {"id": "31", "name": "地图雏形"},
           {"id": "32", "name": "商务理财"},
           {"id": "33", "name": "浪漫偶像"},
@@ -48,7 +48,11 @@
           {"id": "37", "name": "科学技术"}
         ];
 
-    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 5, splitor: " "});
+    function getIds(id){
+      alert(id);
+    }
+
+    $("div").bindCategory({data: data, title: "自定义的标题", itemNum: 5, splitor: " ",callback:getIds});
     $("input").bindCategory({data: data2, splitor: ",", itemNum: 1});
 
     $("#submit").click(function () {
