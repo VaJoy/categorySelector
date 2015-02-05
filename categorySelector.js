@@ -47,20 +47,19 @@
 
         var win_h, sroll_t, sroll_l,
             addedNum = 0,
-            doc_h = Math.max($body.height(), $html.height()),
             $clearFixed = $("<style id='cs-clearFixed'>.cs-fontInit{font:12px/1.2 \"Arial\",\"Microsoft Yahei\";}.cs-clearfixed:after{content:'\\200B';display:block;height:0;clear:both;}.cs-a-hover,.cs-btn-hover{transition:all .3s;}.cs-a-hover{color:#ccc;}.cs-a-hover:hover{color:" + option.theme + ";}.cs-btn-hover{color:#333;}.cs-btn-hover:hover{color:white;background:" + option.theme + ";}.cs-selected{color:white;background:" + option.theme + ";}</style>"),
-            $bg = $("<div style='position:absolute;z-index:9999996;top:0;left:0;width:100%;height:" + doc_h + "px;background:black;opacity:0.6;'></div>"),
+            $bg = $("<div style='position:fixed;z-index:9999996;top:0;bottom:0;left:0;right:0;background:black;opacity:0.6;'></div>"),
             $wrap = $("<div class='cs-fontInit' style='position:absolute;padding-bottom:13px;z-index:9999997;left:50%;width:750px;color:#666;background:white;'></div>"),
             $top = $("<h3 style='padding:10px;margin:0;border-bottom:solid 1px #ccc;font-size:14px;background:#F3F3F3;'>" + option.title + "<label id='maxNum' style='font-weight:normal;'></label><div style='float: right;width:130px;text-align: right;font-size:12px;font-weight:normal;'><span>[ <a style='text-decoration:none;color:" + option.theme + ";' id='cs_save' href='javascript:void(0);'>确定</a> ]</span>&nbsp;&nbsp;<span>[ <a style='text-decoration:none;color:" + option.theme + ";' id='cs_cancle' href='javascript:void(0);'>取消</a> ]</span></div></h3>"),
             $candidateArea = $("<div class='cs-clearfixed' style='padding:10px;padding-bottom:5px;border-bottom: dotted 1px #ccc;'><span style='display:block;float: left;padding-top:4px;'>已添加：</span><div id='addedArea' style='float: left;width:580px;'></div><a id='cs-clearAll' style='display:block;float:right;padding:2px 5px;border-radius:3px;color:white;text-decoration:none;background:" + option.theme + ";' href='javascript:void(0);' title='情况全部选项'>清空</a></div>"),
             $selectArea = $("<div class='cs-clearfixed' style='padding:20px 10px 0 10px;height:380px;border-bottom: dotted 1px #ccc;overflow-y:scroll;'></div>");
 
-        if ($initInput.data("bindCategory")) $initInput.off("click", showCategory);  //单例模式
-        else {
-            $initInput.data("bindCategory", "bound");
-            $initInput.on("click", showCategory);
-            setDefaultVal(option.emptyText);
-        }
+        if ($initInput.data("bindCategory")){ $initInput.off("click");} 
+
+		$initInput.data("bindCategory", "bound");
+		$initInput.on("click", showCategory);
+		setDefaultVal(option.emptyText);
+
         if ($("#cs-clearFixed").length < 1) $("head").append($clearFixed);
 
         /**
